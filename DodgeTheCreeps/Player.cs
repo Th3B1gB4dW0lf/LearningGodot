@@ -11,6 +11,7 @@ public class Player : Area2D
 	public override void _Ready()
 	{
 		_screenSize = GetViewport().Size;
+		Hide();
 	}
 	
 	public override void _Process(float delta)
@@ -68,4 +69,24 @@ public class Player : Area2D
 			animatedSprite.FlipV = velocity.y > 0;
 		}
 	}
+	
+	public void Start(Vector2 pos)
+	{
+		Position = pos;
+		Show();
+		GetNode<CollisionShape2D>("CollisionShape2D").Disabled = false;
+	}
+	
+	[Signal]
+	public delegate void Hit();
+	
+	private void OnPlayerBodyEntered(object body)
+	{
+		Hide(); // Player disappears after being hit.
+		EmitSignal("Hit");
+		GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred("disabled", true);	// Replace with function body.
+	}
 }
+
+
+
