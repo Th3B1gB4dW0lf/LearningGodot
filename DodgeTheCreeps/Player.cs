@@ -87,6 +87,3 @@ public class Player : Area2D
 		GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred("disabled", true);	// Replace with function body.
 	}
 }
-
-
-
